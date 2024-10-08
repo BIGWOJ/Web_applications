@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <link rel="stylesheet" href="page1.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sauny</title>
+</head>
+<body class="body">
+<header class="header">
+  <h1>Mobilne sauny</h1>
+  <h3>Mobilna sauna na Twoje życzenie</h3>
+</header>
+
+<h2> Sauna na wskazany adres? <br> Zobacz jakie to proste!</h2>
+<p>Krok 1: <br>Sprawdź naszą ofertę</p>
+<p>Krok 2: <br>Zadzwoń do nas</p>
+<p>Krok 3: <br>Chwila moment i będziemy u Ciebie!</p>
+<p>Krok 4: <br>Finalny krok - po prostu saunowy relaks...</p>
+
+<!-- Zdjęcia -->
+<img src="logo.png" alt="Logo">
+<img src="ig.png" alt="Instagram">
+<img src="fb.png" alt="Facebook">
+<img src="mark.png" alt="Obrazek 1">
+<img src="mark.png" alt="Obrazek 2">
+<img src="mark.png" alt="Obrazek 3">
+<img src="mark.png" alt="Obrazek 4">
+<img src="dot.png">
+
+<!-- Przycisk do przekierowania na inną stronę -->
+<div class="social-buttons">
+  <button id="theme_button" class="theme-button">Change theme</button>
+</div>
+
+<script>
+  // Funkcja przekierowująca do page2.html
+  document.getElementById('page-toggle').addEventListener('click', function() {
+    window.location.href = 'page2.html'; // Przekierowanie do page2.html
+  });
+</script>
+
+</body>
+</html>

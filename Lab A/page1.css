@@ -1,0 +1,28 @@
+.header {
+    display: block;
+    color: #F0F0F0;
+}
+
+.body {
+    color: #F0F0F0;
+    background-image: url("sauna3.jpg");
+}
+
+.theme_button {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.fb-button {
+    background-color: #4267B2; /* Kolor Facebooka */
+    color: white;
+    padding: 20px 20px;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.fb-button:hover {
+    background-color: #365899; /* Ciemniejszy kolor po najechaniu */
+}
