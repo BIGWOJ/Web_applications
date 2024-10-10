@@ -1,6 +1,13 @@
 .header {
-    display: block;
-    color: #F0F0F0;
+    position: relative; /* Pozycja względna, aby inne elementy były poprawnie wyświetlane */
+    width: 100vw; /* Szerokość 100% okna przeglądarki (viewport width) */
+    height: 200px; /* Wysokość headera */
+    background-color: #4267B2; /* Możesz ustawić dowolny kolor tła lub obraz */
+    color: white; /* Kolor tekstu */
+    display: flex;
+    justify-content: center; /* Wyrównanie poziome (horyzontalne) */
+    align-items: center; /* Wyrównanie pionowe (wertykalne) */
+    text-align: center; /* Wyrównanie tekstu do środka */
 }
 
 .body {
@@ -8,21 +15,28 @@
     background-image: url("sauna3.jpg");
 }
 
-.theme_button {
-    margin-top: 50px;
+.page2_button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #AA8778;
+    color: #211D21;
     text-align: center;
-}
-
-.fb-button {
-    background-color: #4267B2; /* Kolor Facebooka */
-    color: white;
-    padding: 20px 20px;
     text-decoration: none;
-    font-size: 16px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    font-size: 18px;
+    border-radius: 20px;
+    border: solid 1px #F0F0F0;
+    transition: color 0.35s ease;
 }
 
-.fb-button:hover {
-    background-color: #365899; /* Ciemniejszy kolor po najechaniu */
+.page2_button:hover {
+    color: #F0F0F0;
+    border: none;
 }
+
+.dot_1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
