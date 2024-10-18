@@ -182,7 +182,7 @@ body {
 @media (max-width: 375px) {
 
     .header{
-        padding: 0 0px;
+        padding: 0 0;
     }
 
     .header_text {
@@ -220,39 +220,44 @@ body {
     .middle_text {
         font-size: 16px;
         margin-left: 0;
-        margin-top: 15vh;
+        margin-top: 23vh;
     }
 
     .step_1, .step_2, .step_3, .step_4 {
-        font-size: 12px;
+        font-size: 14px;
+        scale: 75%;
+
+        img {
+            scale: 85%;
+        }
     }
 
     .step_1 {
-        top: 20vh;
+        top: 25vh;
         left: 5%;
     }
 
     .step_2 {
-        top: 30vh;
+        top: 35vh;
         left: 50%;
         transform: translateX(-50%);
     }
 
     .step_3 {
-        top: 40vh;
+        top: 45vh;
         left: 80%;
         transform: translateX(-50%);
     }
 
     .step_4 {
-        top: 60vh;
-        left: 50%;
+        top: 70vh;
+        left: 47%;
         transform: translateX(-50%);
     }
 
     .sauna_advantages_title {
         font-size: 20px;
-        margin-top: 75vh;
+        margin-top: 85vh;
     }
 
     .sauna_advantages li {
@@ -271,12 +276,13 @@ body {
 
     .theme_button {
         font-size: 10px;
-        bottom: 4vh;
+        bottom: 6vh;
     }
 
     .footer {
-        height: 3vh;
+        height: 5vh;
+        padding-bottom: 0.2vh;
+        padding-top: 0.2vh;
     }
-
 }
 

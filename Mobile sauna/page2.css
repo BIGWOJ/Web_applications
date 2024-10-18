@@ -7,7 +7,7 @@
     justify-content: center;
     align-items: center;
     color: #211D21;
-    background-color: #AA8778;
+    background-image: linear-gradient(#211D21, #AA8778);
     padding: 0;
     margin: 0 auto;
     border-left: 2px solid #211D21;
@@ -52,20 +52,20 @@
 }
 
 body {
-    color: #F0F0F0;
-    background-image: url("sauna_background.jpg");
-    background-repeat: no-repeat;
+    color: #211D21;
+    background-image: linear-gradient(#211D21, #AA8778);
     background-size: cover;
-    background-position: top center;
+    background-position: center;
+    background-repeat: no-repeat;
     margin: 0;
     padding: 0;
     text-shadow:
-            -1px -1px 0 #211D21,
+            -1px -1px 0 saddlebrown,
             1px -1px 0 #211D21,
             -1px 1px 0 #211D21,
             1px 1px 0 #211D21;
     height: auto;
-    width: 95vw;
+    width: 100vw;
     overflow-x: hidden;
     font-family: 'Pacifico', cursive;
 }
@@ -97,6 +97,7 @@ body {
     font-size: 20px;
     p {
         margin-top: 0;
+        margin-bottom: 1vh;
     }
 }
 
@@ -171,9 +172,6 @@ body {
     margin-bottom: 5px;
 }
 
-
-
-
 .theme_button {
     display: inline-block;
     padding: 5px 10px;
@@ -206,13 +204,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    border-top-right-radius: 50%;
+    border-top-left-radius: 50%;
     border-top: 2px solid #F0F0F0;
 }
 
 @media (max-width: 375px) {
 
     .header{
-        padding: 0 0px;
+        width: 40vw;
     }
 
     .header_text {
@@ -222,62 +222,65 @@ body {
     .subtitle {
         font-size: 12px;
         line-height: 1;
+        margin: 0;
     }
 
     .logo {
         height: 50px;
-        margin-left: 0;
     }
 
     .fb_logo, .ig_logo {
         height: 40px;
-        margin-right: 2vw;
-        margin-left: 0;
-        padding-left: 0;
-
-    }
-    .fb_logo {
-        right: 20px;
-    }
-    .ig_logo {
-        margin-right: 0;
-    }
-
-    .body {
-        height: auto;
     }
 
     .middle_text {
         font-size: 16px;
-        margin-left: 0;
+        align-content: center;
+        width: 70vw;
+        height: 15vh;
         margin-top: 15vh;
     }
 
     .step_1, .step_2, .step_3, .step_4 {
         font-size: 12px;
+        img {
+            scale: 50%;
+          }
     }
 
     .step_1 {
-        top: 20vh;
-        left: 5%;
+        top: 85vh;
+        left: 0;
+        .list {
+            margin-top: 25px;
+        }
     }
 
     .step_2 {
-        top: 30vh;
-        left: 50%;
-        transform: translateX(-50%);
+        top: 55vh;
+        left: 20%;
+        .phone {
+            margin-top: 15px;
+        }
     }
 
     .step_3 {
-        top: 40vh;
-        left: 80%;
+        top: 55vh;
+        left: 70%;
         transform: translateX(-50%);
+        .clock {
+            margin-top: -25px;
+        }
     }
 
     .step_4 {
-        top: 60vh;
-        left: 50%;
+        top: 120vh;
+        left: 85%;
         transform: translateX(-50%);
+
+        .yin_yang {
+            margin-top: -20px;
+        }
     }
 
     .sauna_advantages_title {
@@ -295,17 +298,52 @@ body {
         margin-right: 5px;
     }
 
-    .last_image {
-        padding-bottom: 5vh;
-    }
-
     .theme_button {
         font-size: 10px;
-        bottom: 4vh;
+        bottom: 2vh;
     }
 
     .footer {
-        height: 3vh;
+        height: 7vh;
+        width: 100%;
+    }
+
+}
+
+@media (max-width: 1440px) {
+    .header {
+        height: 70vh;
+    }
+
+    .step_1 {
+        top: 130vh;
+    }
+
+    .step_2 {
+        top: 100vh;
+    }
+
+    .step_3 {
+        top: 100vh;
+    }
+
+    .step_4 {
+        top: 130vh;
+    }
+
+    .sauna_advantages_title {
+        font-size: 20px;
+        margin-top: 85vh;
+    }
+
+    .sauna_advantages li {
+        font-size: 14px;
+        left: 20px;
+    }
+
+    .sauna_advantages img {
+        height: 80px;
+        margin-right: 5px;
     }
 
 }
