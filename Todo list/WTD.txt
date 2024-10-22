@@ -1,0 +1,9 @@
+1. Zmienić na getElementsByClassName
+2. Po kliknięciu na zadanie, data przesuwa się do środka - dać, żeby była dalej po prawej
+3. Dodać zmianę daty
+4. Po użyciu wyszukiwania emoji kosza oraz data przesuwają się do lewej strony - niech zostaną na swoim miejscu po prawej
+nawet jak nie wyszukuje się nic - nawet jak wpiszę 1 literę to od razu do lewej idzie
+5. usunąć minus mały z początku daty
+6. okomentować na sam koniec
+
+

@@ -1,14 +1,3 @@
-//Zmienić na getElementsByClassName
-//Po kliknięciu na zadanie, data przesuwa się do środka - dać, żeby była dalej po prawej
-//Dodać zmianę daty
-//Po użyciu wyszukiwania emoji kosza oraz data przesuwają się do lewej strony - niech zostaną na swoim miejscu po prawej
-//nawet jak nie wyszukuje się nic - nawet jak wpiszę 1 literę to od razu do lewej idzie
-//usunąć minus mały z początku daty
-//okomentować na sam koniec
-
-
-
-
 const taskList = document.getElementById('taskList');
 const searchInput = document.getElementById('search');
 const newTaskInput = document.getElementById('newTask');
