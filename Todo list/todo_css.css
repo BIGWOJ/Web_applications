@@ -92,13 +92,13 @@ body {
     background: #0e0c0e;
 }
 
-#taskList {
+#task_list {
     list-style-type: none;
     padding: 0;
     margin: 25px auto;
 }
 
-#taskList li {
+#task_list li {
     background-color: #F8F4F1;
     margin-bottom: 10px;
     padding: 10px 15px;
@@ -109,7 +109,7 @@ body {
     box-shadow: 0 2px 4px #AA8778;
 }
 
-/*#taskList li .task-text {*/
+/*#task_list li .task-text {*/
 /*    flex-grow: 1;*/
 /*}*/
 
@@ -117,7 +117,14 @@ body {
     flex-grow: 1;
 }
 
-#taskList li .delete-btn {
+.task-edit-input {
+    font-size: inherit; /* Dopasowanie rozmiaru */
+    font-family: inherit; /* Dopasowanie kroju pisma */
+    border: none; /* Usuń obramowanie */
+    margin-right: 20px;
+}
+
+#task_list li .delete-btn {
     background: none;
     border: none;
     color: #A07968;
@@ -125,15 +132,16 @@ body {
     font-size: 20px;
 }
 
-#taskList li .change_date {
+#task_list li .edit_task_date {
     background: none;
     border: none;
     color: #A07968;
     cursor: pointer;
     font-size: 20px;
+    margin-left: 20px;
 }
 
-#taskList li .delete-btn:hover {
+#task_list li .delete-btn:hover {
     color: #211D21;
 }
 
@@ -141,3 +149,4 @@ mark {
     background-color: #FFD54F;
     padding: 0;
 }
+

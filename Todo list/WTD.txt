@@ -1,5 +1,2 @@
-1. Zmienić na getElementsByClassName
-2. Po kliknięciu na zadanie, data przesuwa się do środka - dać, żeby była dalej po prawej
-6. okomentować na sam koniec
-
-
+1. po kliknięciu na kalendarz możliwość zmiany (dodania) daty do zadania gdzie nie jej nie było
+2. okomentować
