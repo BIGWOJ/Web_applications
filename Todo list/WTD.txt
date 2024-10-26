@@ -1,2 +1,2 @@
-1. po kliknięciu na kalendarz możliwość zmiany (dodania) daty do zadania gdzie nie jej nie było
-2. okomentować
+1. Okomentować
+2. Po kliknięciu na kalendarz zadania bez daty -> możliwość jej dodani
