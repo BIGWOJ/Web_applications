@@ -22,6 +22,10 @@ body {
     white-space: nowrap;
 }
 
+/*.taskDate {*/
+/*    color: yellow;*/
+/*}*/
+
 .search_box {
     background-color: #AA8778;
     width: 250px;
@@ -39,8 +43,8 @@ body {
 .search_box input {
     border: none;
     background: none;
-    width: 90%;
     outline: none;
+    width: 100%;
     font-size: 16px;
     color: #211D21;
 }
@@ -72,7 +76,6 @@ body {
     background: none;
     outline: none;
     font-size: 16px;
-    width: 70%;
     color: #211D21;
 }
 
@@ -82,7 +85,7 @@ body {
     border: none;
     border-radius: 20px;
     padding: 7px 15px;
-    /*cursor: pointer;*/
+    cursor: pointer;
 }
 
 .add_box button:hover {
@@ -92,7 +95,7 @@ body {
 #taskList {
     list-style-type: none;
     padding: 0;
-    margin: 20px 0;
+    margin: 25px auto;
 }
 
 #taskList li {
@@ -114,13 +117,15 @@ body {
     flex-grow: 1;
 }
 
-#taskList li .task-date {
-    margin-left: 15px;
-    color: #AA8778;
-    font-size: 14px;
+#taskList li .delete-btn {
+    background: none;
+    border: none;
+    color: #A07968;
+    cursor: pointer;
+    font-size: 20px;
 }
 
-#taskList li .delete-btn {
+#taskList li .change_date {
     background: none;
     border: none;
     color: #A07968;
