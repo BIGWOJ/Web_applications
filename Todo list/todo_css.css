@@ -15,16 +15,12 @@ body {
     max-width: 100%;
     margin: 50px auto;
     padding: 20px;
-    box-shadow: 0 4px 8px #AA8778;
+    box-shadow: 0 4px 10px #AA8778;
     border-radius: 8px;
     border: 1px solid #211D21;
     display: block;
     white-space: nowrap;
 }
-
-/*.taskDate {*/
-/*    color: yellow;*/
-/*}*/
 
 .search_box {
     background-color: #AA8778;
@@ -51,7 +47,6 @@ body {
 
 .search_box:hover {
     background-color: #A07968;
-    transform: scale(1.01);
 }
 
 .add_box {
@@ -71,6 +66,10 @@ body {
     padding: 5px 15px;
 }
 
+.add_box:hover {
+    background-color: #A07968;
+}
+
 .add_box input {
     border: none;
     background: none;
@@ -86,19 +85,20 @@ body {
     border-radius: 20px;
     padding: 7px 15px;
     cursor: pointer;
+    font-size: 14px;
 }
 
 .add_box button:hover {
     background: #0e0c0e;
 }
 
-#task_list {
+.task_list {
     list-style-type: none;
     padding: 0;
     margin: 25px auto;
 }
 
-#task_list li {
+single_task {
     background-color: #F8F4F1;
     margin-bottom: 10px;
     padding: 10px 15px;
@@ -109,22 +109,22 @@ body {
     box-shadow: 0 2px 4px #AA8778;
 }
 
-/*#task_list li .task-text {*/
-/*    flex-grow: 1;*/
-/*}*/
+single_task:hover {
+    background-color: #F0F0F0;
+}
 
-.task-text {
+.task_text {
     flex-grow: 1;
 }
 
-.task-edit-input {
-    font-size: inherit; /* Dopasowanie rozmiaru */
-    font-family: inherit; /* Dopasowanie kroju pisma */
-    border: none; /* Usuń obramowanie */
+.edit_task_text_input {
+    font-size: inherit;
+    font-family: inherit;
+    border: none;
     margin-right: 20px;
 }
 
-#task_list li .delete-btn {
+#task_list .delete_button {
     background: none;
     border: none;
     color: #A07968;
@@ -132,7 +132,7 @@ body {
     font-size: 20px;
 }
 
-#task_list li .edit_task_date {
+#task_list .edit_task_date {
     background: none;
     border: none;
     color: #A07968;
@@ -141,12 +141,8 @@ body {
     margin-left: 20px;
 }
 
-#task_list li .delete-btn:hover {
-    color: #211D21;
-}
-
 mark {
     background-color: #FFD54F;
-    padding: 0;
+    padding: 5px 0;
 }
 

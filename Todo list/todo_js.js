@@ -4,100 +4,110 @@ const new_task_input = document.getElementById('new_task');
 const task_date_input = document.getElementById('task_date');
 const add_task_button = document.getElementById('add_task_button');
 
-document.addEventListener('DOMContentLoaded', load_tasks);
+//Initially loading tasks from local storage
+document.addEventListener('DOMContentLoaded', load_tasks_from_local_storage);
+
+//Adding task after clicking add task button
 add_task_button.addEventListener('click', add_task);
+
+//Searching tasks after typing in search input
 search_input.addEventListener('input', search_tasks);
 
 function add_task() {
-    console.log('add_task');
     const task_text = new_task_input.value.trim();
     const task_date = task_date_input.value;
 
     if (task_text.length < 3 || task_text.length > 255) {
-        alert('Zadanie musi mieć od 3 do 255 znaków.');
+        alert("Task description should be 3-255 characters long.");
         return;
     }
 
     const task = {
         text: task_text,
         date: task_date || null,
+        //Date.now returns milliseconds since 01.01.1970
         id: Date.now()
     };
 
     save_task_to_local_storage(task);
 
-    //Wyczyszczenie pola tekstowego
+    //Clearing input fields after adding task
     new_task_input.value = '';
     task_date_input.value = '';
 
     write_task(task);
 }
 
-//
 function write_task(task) {
-    const li = document.createElement('li');
-    li.className = 'task-item';
-    li.dataset.id = task.id;
-    li.innerHTML = `
-        <span class="task-text">${task.text}</span>
-        ${task.date ? `<span class="task-date"> ${new Date(task.date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' })}</span>` : ''}
+    const new_task = document.createElement('single_task');
+    new_task.dataset.id = task.id;
+    new_task.innerHTML = `
+        <span class="task_text">${task.text}</span>
+        ${task.date ? `<span class="task_date"> ${new Date(task.date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' })}</span>` : ''}
         <button class="edit_task_date">📅</button>
-        <button class="delete-btn">🗑️</button>`;
+        <button class="delete_button">🗑️</button>`;
 
-    li.querySelector('.task-text').addEventListener('click', () => edit_task_text(li));
-    li.querySelector('.delete-btn').addEventListener('click', () => delete_task(task.id));
-    li.querySelector('.edit_task_date').addEventListener('click', () => edit_task_date(li));
-    task_list.appendChild(li);
+    new_task.querySelector('.task_text').addEventListener('click', () => edit_task_text(new_task));
+    new_task.querySelector('.delete_button').addEventListener('click', () => delete_task(task.id));
+    new_task.querySelector('.edit_task_date').addEventListener('click', () => edit_task_date(new_task));
+    task_list.appendChild(new_task);
 }
 
 function save_task_to_local_storage(task) {
+    //Parse changes string into object
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     tasks.push(task);
+    //Stringify changes object into string to correctly save it in local storage
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-function load_tasks() {
+function load_tasks_from_local_storage() {
+    //Getting tasks from local storage or empty array if there are no tasks
     const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     tasks.forEach(task => write_task(task));
 }
 
 function delete_task(id) {
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    //Filtering out task with id equal to id of deleting task
     tasks = tasks.filter(task => task.id !== id);
     localStorage.setItem('tasks', JSON.stringify(tasks));
-    document.querySelector(`li[data-id="${id}"]`).remove();
+    //Deleting based on id
+    document.querySelector(`single_task[data-id="${id}"]`).remove();
 }
 
-function edit_task_text(li) {
-    const task_textEl = li.querySelector('.task-text');
-    const oldText = task_textEl.textContent;
+function edit_task_text(editing_task) {
+    const task_text_html = editing_task.querySelector('.task_text');
+    const old_text = task_text_html.textContent;
 
     const input = document.createElement('input');
     input.type = 'text';
-    input.value = oldText;
+    input.value = old_text;
 
-    //Dopasowanie stylów
-    input.className = 'task-edit-input'; // Klasa dla stylów input
-    input.style.width = `${task_textEl.offsetWidth}px`; // Dopasowanie szerokości
+    input.className = 'edit_task_text_input';
+    input.style.width = `${task_text_html.offsetWidth}px`;
 
-    li.replaceChild(input, task_textEl);
+    editing_task.replaceChild(input, task_text_html);
 
-    //Zapisanie zmian po kliknięciu poza pole edycji
+    //Saving changes after clicking outside of the input field
     input.addEventListener('blur', () => {
-        const newText = input.value.trim();
-        if (newText.length >= 3 && newText.length <= 255) {
-            task_textEl.textContent = newText;
-            li.replaceChild(task_textEl, input);
+        const new_text = input.value.trim();
+        if (new_text.length >= 3 && new_text.length <= 255) {
+            task_text_html.textContent = new_text;
+            editing_task.replaceChild(task_text_html, input);
 
-            // Aktualizacja w LocalStorage
             let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-            const task = tasks.find(task => task.id === parseInt(li.dataset.id));
-            task.text = newText;
+            //Finding task with id equal to id of editing task
+            //ParseInt converts string into int
+            const task = tasks.find(task => task.id === parseInt(editing_task.dataset.id));
+            task.text = new_text;
             localStorage.setItem('tasks', JSON.stringify(tasks));
-        } else {
-            alert('Zadanie musi mieć od 3 do 255 znaków.');
-            task_textEl.textContent = oldText;
-            li.replaceChild(task_textEl, input);
+        }
+
+        else {
+            alert("Task description should be 3-255 characters long.");
+            task_text_html.textContent = old_text;
+            editing_task.replaceChild(task_text_html, input);
         }
     });
 
@@ -110,43 +120,49 @@ function edit_task_text(li) {
     input.focus();
 }
 
-function edit_task_date(li) {
-    const task_dateEl = li.querySelector('.task-date')
-    if(!task_dateEl) {
-        console.log('Brak daty');
-        return;
+function edit_task_date(editing_task) {
+    let task_date_html = editing_task.querySelector('.task_date')
+
+    //Adding date if it doesn't exist
+    if (!task_date_html) {
+        task_date_html = document.createElement('span');
+        task_date_html.className = 'task_date';
+        //Adding date before edit button
+        editing_task.insertBefore(task_date_html, editing_task.querySelector('.edit_task_date'));
     }
 
-    const oldDateText = task_dateEl.textContent.trim();
-
-    const [day, month, year] = oldDateText.split('.'); // Zakładamy, że data jest w formacie DD.MM.YYYY
-    const oldDate = `${year}-${month}-${day}`;
-
+    const old_date = task_date_html.textContent.trim();
     const input = document.createElement('input');
     input.type = 'date';
-    input.value = oldDate; // Ustawienie wartości inputa na YYYY-MM-DD
+    input.value = old_date;
 
-    li.replaceChild(input, task_dateEl);
+    editing_task.replaceChild(input, task_date_html);
 
-    //Zapisanie zmian po kliknięciu poza pole edycji
     input.addEventListener('blur', () => {
-        const newDate = input.value;
-        if (newDate) {
-            const [year, month, day] = newDate.split('-');
-            const formattedDate = `${day}.${month}.${year}`;
+        const new_date = input.value;
+        if (new_date) {
+            const [year, month, day] = new_date.split('-');
+            //Input format is DD-MM-YYYY, so it needs to be changed to DD.MM.YYYY
+            const formatted_date = `${day}.${month}.${year}`;
 
-            task_dateEl.textContent = `${formattedDate}`;
-            li.replaceChild(task_dateEl, input);
+            task_date_html.textContent = `${formatted_date}`;
+            editing_task.replaceChild(task_date_html, input);
 
             let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-            const task = tasks.find(task => task.id === parseInt(li.dataset.id));
-            task.date = newDate; // Przechowujemy datę w formacie YYYY-MM-DD do łatwego odczytu
+            const task = tasks.find(task => task.id === parseInt(editing_task.dataset.id));
+            task.date = new_date;
             localStorage.setItem('tasks', JSON.stringify(tasks));
         }
 
+        //Deleting date if input is empty
         else {
-            alert('Wybierz poprawną datę.');
-            li.replaceChild(task_dateEl, input);
+            task_date_html.textContent = '';
+            editing_task.replaceChild(task_date_html, input);
+
+            let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            const task = tasks.find(task => task.id === parseInt(editing_task.dataset.id));
+            task.date = null;
+            localStorage.setItem('tasks', JSON.stringify(tasks));
         }
     });
 
@@ -160,27 +176,28 @@ function edit_task_date(li) {
 }
 
 function search_tasks() {
-    const searchTerm = search_input.value.toLowerCase();
-    const tasks = document.querySelectorAll('#task_list li');
+    const searching_term = search_input.value.toLowerCase();
+    const tasks = document.querySelectorAll('single_task');
 
     tasks.forEach(task => {
-        const task_textEl = task.querySelector('.task-text');
-        const task_text = task_textEl.textContent.toLowerCase();
+        const task_text_html = task.querySelector('.task_text');
+        const task_text = task_text_html.textContent.toLowerCase();
 
-        if (searchTerm.length >= 2) {
-            if (task_text.includes(searchTerm)) {
+        if (searching_term.length >= 2) {
+            if (task_text.includes(searching_term)) {
                 task.style.display = 'flex';
-                const originalText = task_textEl.textContent;
+                const original_text = task_text_html.textContent;
 
-                if (!task_textEl.dataset.originalText) {
-                    task_textEl.dataset.originalText = originalText;
+                if (!task_text_html.dataset.original_text) {
+                    task_text_html.dataset.original_text = original_text;
                 }
 
-                const highlightedText = originalText.replace(
-                    new RegExp(`(${searchTerm})`, 'gi'),
+                const highlighted_text = original_text.replace(
+                    //g - global, i - case insensitive
+                    new RegExp(`(${searching_term})`, 'gi'),
                     match => `<mark>${match}</mark>`
                 );
-                task_textEl.innerHTML = highlightedText;
+                task_text_html.innerHTML = highlighted_text;
             }
 
             else {
@@ -189,10 +206,8 @@ function search_tasks() {
         }
 
         else {
-            //Poprzednie formatowanie po usunięciu tekstu z pola wyszukiwania
             task.style.display = 'flex';
-            task_textEl.innerHTML = task_textEl.dataset.originalText || task_textEl.textContent;
+            task_text_html.innerHTML = task_text_html.dataset.original_text || task_text_html.textContent;
         }
     });
 }
-

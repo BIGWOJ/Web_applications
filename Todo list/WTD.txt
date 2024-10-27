@@ -1,2 +1,1 @@
 1. Okomentować
-2. Po kliknięciu na kalendarz zadania bez daty -> możliwość jej dodani
