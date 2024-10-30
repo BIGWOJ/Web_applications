@@ -12,7 +12,7 @@ body {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     gap: 25px;
-    width: 100%;
+    width: 2000px;
 }
 
 #map_box {
@@ -37,7 +37,7 @@ body {
     z-index: 1000;
 }
 
-#map_ss {
+#raster_map {
     width: 100%;
     height: 500px;
     border: 2px solid #211D21;
