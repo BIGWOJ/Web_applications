@@ -6,10 +6,15 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 document.getElementById("download_icon").addEventListener("click", function() {
     leafletImage(map, function (err, canvas) {
-        let rasterMap = document.getElementById("raster_map");
-        let rasterContext = rasterMap.getContext("2d");
+        if (!err) {
+            // Display the downloaded map in the 1st-row, 2nd-column canvas
+            let rasterMap = document.getElementById("raster_map");
+            rasterMap.width = canvas.width;
+            rasterMap.height = canvas.height;
+            let rasterContext = rasterMap.getContext("2d");
+            rasterContext.drawImage(canvas, 0, 0);
 
-        rasterContext.drawImage(canvas, 0, 0, rasterMap.width, rasterMap.height);
+        }
     });
 });
 
