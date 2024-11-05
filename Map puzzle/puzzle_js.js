@@ -72,73 +72,15 @@ document.getElementById("download_icon").addEventListener("click", function() {
                     let random_row = Math.floor(random_index / 4);
 
                     // Draw initial puzzle grid on map_puzzle canvas
+                    console.log(tiles)
                     map_puzzle_context.drawImage(tileCanvas, random_column * mini_square_width, random_row * mini_square_height);
                     map_puzzle_context.strokeRect(random_column * mini_square_width, random_row * mini_square_height, mini_square_width, mini_square_height);
                 }
             }
 
 
-           map_puzzle.addEventListener("mousedown", function(event) {
-    const mouseX = event.offsetX;
-    const mouseY = event.offsetY;
-    console.debug("mousedown");
 
-    // Check if the mouse is on any tile
-    for (let tile of tiles) {
-        if (
-            mouseX > tile.x && mouseX < tile.x + tile.width &&
-            mouseY > tile.y && mouseY < tile.y + tile.height
-        ) {
-            draggingTile = tile;
-            offsetX = mouseX - tile.x;
-            offsetY = mouseY - tile.y;
-            break;
-        }
-    }
-});
 
-map_puzzle.addEventListener("mousemove", function(event) {
-    console.debug(event);
-    if (draggingTile) {
-        const mouseX = event.offsetX;
-        const mouseY = event.offsetY;
-
-        // Update the dragged tile's position
-        draggingTile.x = mouseX - offsetX;
-        draggingTile.y = mouseY - offsetY;
-
-        // Clear the canvas and redraw all tiles with their updated positions
-        let map_puzzle_context = map_puzzle.getContext("2d");
-        map_puzzle_context.clearRect(0, 0, map_puzzle.width, map_puzzle.height);
-
-        for (let tile of tiles) {
-            map_puzzle_context.drawImage(tile.image, tile.x, tile.y);
-            map_puzzle_context.strokeRect(tile.x, tile.y, tile.width, tile.height);
-        }
-    }
-});
-//
-//
-//         map_puzzle.addEventListener("mouseup", function() {
-//     if (draggingTile) {
-//         // Snap the tile to the nearest grid position
-//         draggingTile.x = Math.round(draggingTile.x / draggingTile.width) * draggingTile.width;
-//         draggingTile.y = Math.round(draggingTile.y / draggingTile.height) * draggingTile.height;
-//         draggingTile = null;  // Stop dragging the tile
-//
-//         // Redraw all tiles
-//         let map_puzzle_context = map_puzzle.getContext("2d");
-//         map_puzzle_context.clearRect(0, 0, map_puzzle.width, map_puzzle.height);
-//         for (let tile of tiles) {
-//             map_puzzle_context.drawImage(tile.image, tile.x, tile.y);
-//             map_puzzle_context.strokeRect(tile.x, tile.y, tile.width, tile.height);
-//         }
-//     }
-// });
-//
-//             map_puzzle.addEventListener("mouseleave", function() {
-//                 draggingTile = null;  // Stop dragging if the mouse leaves the canvas
-//             });
 
         }
     });

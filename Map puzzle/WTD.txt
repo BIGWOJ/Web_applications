@@ -1,0 +1,1 @@
+1. Po kliknięciu na map_puzzle z polosowanych elementów tworzy się poprawna mapa
