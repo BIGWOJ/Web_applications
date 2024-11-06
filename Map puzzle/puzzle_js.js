@@ -4,9 +4,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-let tiles = [];  // Array to store each puzzle tile as an object with position and image
-let draggingTile = null;  // Track the tile currently being dragged
-let offsetX, offsetY;  // Offset to drag the tile smoothly
+let tiles = [];
+let draggingTile = null;
+let offsetX, offsetY;
 
 document.getElementById("download_icon").addEventListener("click", function() {
     leafletImage(map, function (err, canvas) {
@@ -27,7 +27,7 @@ document.getElementById("download_icon").addEventListener("click", function() {
             let mini_square_width = Math.round(raster_map.width / 4);
             let mini_square_height = Math.round(raster_map.height / 4);
 
-            tiles = [];  // Reset the tiles array
+            tiles = [];
             let random_indexes = []
 
             for (let i = 0; i < 4; i++) {
@@ -50,15 +50,6 @@ document.getElementById("download_icon").addEventListener("click", function() {
                         mini_square_height        // Destination height
                     );
 
-                    // Store each tile in the tiles array with position and canvas reference
-                    tiles.push({
-                        x: j * mini_square_width,
-                        y: i * mini_square_height,
-                        width: mini_square_width,
-                        height: mini_square_height,
-                        image: tileCanvas
-                    });
-
                     let random_index;
                     while (true) {
                         random_index = Math.floor(Math.random() * 16);
@@ -71,20 +62,88 @@ document.getElementById("download_icon").addEventListener("click", function() {
                     let random_column = random_index % 4;
                     let random_row = Math.floor(random_index / 4);
 
-                    // Draw initial puzzle grid on map_puzzle canvas
-                    console.log(tiles)
+                    tiles.push({
+                        x: random_column * mini_square_width,
+                        y: random_row * mini_square_height,
+                        width: mini_square_width,
+                        height: mini_square_height,
+                        image: tileCanvas
+                    });
                     map_puzzle_context.drawImage(tileCanvas, random_column * mini_square_width, random_row * mini_square_height);
                     map_puzzle_context.strokeRect(random_column * mini_square_width, random_row * mini_square_height, mini_square_width, mini_square_height);
                 }
             }
 
+            tiles.forEach(tile => {
+                // tile.image.classList.add('item');
+                tile.draggable = true;
+                // tile.image.draggable = true;
+                // tile.image.id = `item_${tile.x}_${tile.y}`;
+
+            });
+}
 
 
+map_puzzle.addEventListener("mousedown", function(event) {
+    const mouseX = event.offsetX;
+    const mouseY = event.offsetY;
 
-
+    for (let tile of tiles) {
+        if (
+            mouseX > tile.x && mouseX < tile.x + tile.width &&
+            mouseY > tile.y && mouseY < tile.y + tile.height
+        ) {
+            draggingTile = tile;
+            offsetX = mouseX - tile.x;
+            offsetY = mouseY - tile.y;
+            break;
         }
+    }
+});
+
+map_puzzle.addEventListener("mousemove", function(event) {
+    if (draggingTile) {
+        const mouseX = event.offsetX;
+        const mouseY = event.offsetY;
+
+        draggingTile.x = mouseX - offsetX;
+        draggingTile.y = mouseY - offsetY;
+
+        let map_puzzle_context = map_puzzle.getContext("2d");
+        map_puzzle_context.clearRect(0, 0, map_puzzle.width, map_puzzle.height);
+
+        for (let tile of tiles) {
+            map_puzzle_context.drawImage(tile.image, tile.x, tile.y);
+            map_puzzle_context.strokeRect(tile.x, tile.y, tile.width, tile.height);
+        }
+    }
+});
+
+map_puzzle.addEventListener("mouseup", function() {
+    if (draggingTile) {
+        draggingTile.x = Math.round(draggingTile.x / draggingTile.width) * draggingTile.width;
+        draggingTile.y = Math.round(draggingTile.y / draggingTile.height) * draggingTile.height;
+
+        draggingTile = null;
+
+        let map_puzzle_context = map_puzzle.getContext("2d");
+        map_puzzle_context.clearRect(0, 0, map_puzzle.width, map_puzzle.height);
+        for (let tile of tiles) {
+            map_puzzle_context.drawImage(tile.image, tile.x, tile.y);
+            map_puzzle_context.strokeRect(tile.x, tile.y, tile.width, tile.height);
+        }
+    }
+});
+
+map_puzzle.addEventListener("mouseleave", function() {
+    draggingTile = null;
+});
+
     });
 });
+
+
+
 
 
 

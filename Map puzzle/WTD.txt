@@ -1,1 +1,4 @@
-1. Po kliknięciu na map_puzzle z polosowanych elementów tworzy się poprawna mapa
+1. Dodać możliwość przenoszenia kafelków poza map_puzzle kwadrat -> do map_solve kwadratu
+2. Walidacja poprawności ułożenia kafelka
+3. Wiadomość o poprawności - zielona obramówka dla dobrych, czerwona dla złych
+4. Końcowa wiadomość o poprawności wszystkich kafelków
