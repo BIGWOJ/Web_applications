@@ -1,4 +1,4 @@
-let map = L.map('map_box').setView([53.432826892328116, 14.548091452802913], 15);
+let map = L.map('map_box').setView([53.432826892328116, 14.548091452802913], 19);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -18,11 +18,16 @@ document.getElementById("download_icon").addEventListener("click", function() {
             raster_context.drawImage(canvas, 0, 0);
 
             let map_puzzle = document.getElementById("map_puzzle");
+            let map_solve = document.getElementById("map_solve");
             map_puzzle.width = canvas.width;
             map_puzzle.height = canvas.height;
+            map_solve.width = canvas.width;
+            map_solve.height = canvas.height;
             let map_puzzle_context = map_puzzle.getContext("2d");
+            let map_solve_context = map_solve.getContext("2d");
 
             map_puzzle_context.clearRect(0, 0, map_puzzle.width, map_puzzle.height);
+            map_solve_context.clearRect(0, 0, map_solve.width, map_solve.height);
 
             let mini_square_width = Math.round(raster_map.width / 4);
             let mini_square_height = Math.round(raster_map.height / 4);
@@ -36,6 +41,7 @@ document.getElementById("download_icon").addEventListener("click", function() {
                     let tileCanvas = document.createElement('canvas');
                     tileCanvas.width = mini_square_width;
                     tileCanvas.height = mini_square_height;
+                    tileCanvas.style.position = 'absolute';
                     let tileContext = tileCanvas.getContext('2d');
 
                     tileContext.drawImage(
@@ -69,8 +75,12 @@ document.getElementById("download_icon").addEventListener("click", function() {
                         height: mini_square_height,
                         image: tileCanvas
                     });
+
                     map_puzzle_context.drawImage(tileCanvas, random_column * mini_square_width, random_row * mini_square_height);
                     map_puzzle_context.strokeRect(random_column * mini_square_width, random_row * mini_square_height, mini_square_width, mini_square_height);
+                    console.log('asdf');
+                    map_solve_context.strokeRect(random_column * mini_square_width, random_row * mini_square_height, mini_square_width, mini_square_height);
+                    // document.body.appendChild(tileCanvas);
                 }
             }
 
@@ -84,47 +94,66 @@ document.getElementById("download_icon").addEventListener("click", function() {
 }
 
 
-map_puzzle.addEventListener("mousedown", function(event) {
-    const mouseX = event.offsetX;
-    const mouseY = event.offsetY;
+document.addEventListener("mousedown", function(event) {
+    console.log("mousedown");
+    const mouseX = event.clientX;
+    const mouseY = event.clientY;
+    const canvasRect = map_puzzle.getBoundingClientRect();
 
     for (let tile of tiles) {
-        if (
-            mouseX > tile.x && mouseX < tile.x + tile.width &&
-            mouseY > tile.y && mouseY < tile.y + tile.height
-        ) {
+        const tileX = canvasRect.left + tile.x;
+        const tileY = canvasRect.top + tile.y;
+        //console.log(canvasRect.left, canvasRect.top);
+
+        if (mouseX > tileX && mouseX < tileX + tile.width &&
+            mouseY > tileY && mouseY < tileY + tile.height) {
+            console.log("DRAG");
             draggingTile = tile;
-            offsetX = mouseX - tile.x;
-            offsetY = mouseY - tile.y;
+            offsetX = mouseX - tileX;
+            offsetY = mouseY - tileY;
             break;
         }
     }
 });
 
-map_puzzle.addEventListener("mousemove", function(event) {
+document.addEventListener("mousemove", function(event) {
+    //console.log("mousemove");
     if (draggingTile) {
-        const mouseX = event.offsetX;
-        const mouseY = event.offsetY;
+        //draggingTile.image.style.zIndex = 10000000000000000000000;
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
+        //console.log(mouseX, mouseY);
 
-        draggingTile.x = mouseX - offsetX;
-        draggingTile.y = mouseY - offsetY;
+        // Calculate tile's new position relative to the canvas
+        const canvasRect_puzzle = map_puzzle.getBoundingClientRect();
 
-        let map_puzzle_context = map_puzzle.getContext("2d");
+        draggingTile.x = mouseX - canvasRect_puzzle.left - offsetX;
+        draggingTile.y = mouseY - canvasRect_puzzle.top - offsetY;
+
+        // Redraw the canvas
+        const map_puzzle_context = map_puzzle.getContext("2d");
         map_puzzle_context.clearRect(0, 0, map_puzzle.width, map_puzzle.height);
 
         for (let tile of tiles) {
             map_puzzle_context.drawImage(tile.image, tile.x, tile.y);
+
             map_puzzle_context.strokeRect(tile.x, tile.y, tile.width, tile.height);
         }
     }
 });
 
-map_puzzle.addEventListener("mouseup", function() {
+document.addEventListener("mouseup", function(event) {
+    console.log("mouseup");
     if (draggingTile) {
         draggingTile.x = Math.round(draggingTile.x / draggingTile.width) * draggingTile.width;
         draggingTile.y = Math.round(draggingTile.y / draggingTile.height) * draggingTile.height;
 
-        draggingTile = null;
+        let mouseX = event.clientX;
+        let mouseY = event.clientY;
+
+        const map_solve = document.getElementById("map_solve");
+        let map_solve_context = map_solve.getContext("2d");
+        const canvasRect_solve = map_solve.getBoundingClientRect();
 
         let map_puzzle_context = map_puzzle.getContext("2d");
         map_puzzle_context.clearRect(0, 0, map_puzzle.width, map_puzzle.height);
@@ -132,12 +161,23 @@ map_puzzle.addEventListener("mouseup", function() {
             map_puzzle_context.drawImage(tile.image, tile.x, tile.y);
             map_puzzle_context.strokeRect(tile.x, tile.y, tile.width, tile.height);
         }
+
+        if (mouseX > canvasRect_solve.left && mouseX < canvasRect_solve.right &&
+            mouseY > canvasRect_solve.top && mouseY < canvasRect_solve.bottom) {
+            let tileX = Math.floor((mouseX - canvasRect_solve.left) / draggingTile.width) * draggingTile.width;
+            let tileY = Math.floor((mouseY - canvasRect_solve.top) / draggingTile.height) * draggingTile.height;
+            map_solve_context.drawImage(draggingTile.image, tileX, tileY);
+            // map_solve_context.strokeRect(tileX, tileY, draggingTile.width, draggingTile.height);
+        }
+        //draggingTile.image.style.zIndex = 0;
+        draggingTile = null;
     }
 });
 
-map_puzzle.addEventListener("mouseleave", function() {
-    draggingTile = null;
-});
+
+// map_puzzle.addEventListener("mouseleave", function() {
+//     draggingTile = null;
+// });
 
     });
 });

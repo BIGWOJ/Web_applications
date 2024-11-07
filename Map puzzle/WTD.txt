@@ -1,4 +1,6 @@
-1. Dodać możliwość przenoszenia kafelków poza map_puzzle kwadrat -> do map_solve kwadratu
+
 2. Walidacja poprawności ułożenia kafelka
 3. Wiadomość o poprawności - zielona obramówka dla dobrych, czerwona dla złych
 4. Końcowa wiadomość o poprawności wszystkich kafelków
+5. Poprawić, żeby obrazek w map solve po ponownym przemieszczeniu się zresetował - aktualnie, po ponownym
+przniesieniu obrazek finalnie jest w dwóch miejscach
