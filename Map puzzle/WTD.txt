@@ -1,6 +1,4 @@
-
-2. Walidacja poprawności ułożenia kafelka
-3. Wiadomość o poprawności - zielona obramówka dla dobrych, czerwona dla złych
-4. Końcowa wiadomość o poprawności wszystkich kafelków
-5. Poprawić, żeby obrazek w map solve po ponownym przemieszczeniu się zresetował - aktualnie, po ponownym
+1. W map solve jak będzie na dobrym miejscu - brak ponownego ruszania
+2. Poprawić, żeby obrazek w map solve po ponownym przemieszczeniu się zresetował - aktualnie, po ponownym
 przniesieniu obrazek finalnie jest w dwóch miejscach
+3. Widać obrazek tylko w map puzzle, poza już się nie renderuje
