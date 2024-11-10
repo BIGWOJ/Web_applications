@@ -1,4 +1,3 @@
-1. W map solve jak będzie na dobrym miejscu - brak ponownego ruszania
-2. Poprawić, żeby obrazek w map solve po ponownym przemieszczeniu się zresetował - aktualnie, po ponownym
-przniesieniu obrazek finalnie jest w dwóch miejscach
-3. Widać obrazek tylko w map puzzle, poza już się nie renderuje
+1. Widać obrazek tylko w map puzzle, poza już się nie renderuje
+2. Jeżeli w map solve jest kafelek na złym miejscu i dodam kolejny z map puzzle na map solve, czyli są 2 na złym miejscu
+w map solve, to rysuje się tylko ten nowszy

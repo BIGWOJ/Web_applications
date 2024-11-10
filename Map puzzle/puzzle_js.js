@@ -5,7 +5,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 let tiles = [];
-let correct_tiles = 0;
+let correct_tiles_counter = 0;
 let draggingTile = null;
 let offsetX, offsetY;
 
@@ -28,7 +28,7 @@ document.getElementById("download_icon").addEventListener("click", function() {
             let map_solve_context = map_solve.getContext("2d");
 
             map_puzzle_context.clearRect(0, 0, map_puzzle.width, map_puzzle.height);
-            map_solve_context.clearRect(0, 0, map_solve.width, map_solve.height);
+            //map_solve_context.clearRect(0, 0, map_solve.width, map_solve.height);
 
             let mini_square_width = Math.round(raster_map.width / 4);
             let mini_square_height = Math.round(raster_map.height / 4);
@@ -113,7 +113,8 @@ document.addEventListener("mousedown", function(event) {
         //console.log(canvasRect.left, canvasRect.top);
 
         if (mouseX > tileX && mouseX < tileX + tile.width &&
-            mouseY > tileY && mouseY < tileY + tile.height) {
+            mouseY > tileY && mouseY < tileY + tile.height &&
+            tile.draggable) {
             console.log("DRAG");
             draggingTile = tile;
             offsetX = mouseX - tileX;
@@ -125,7 +126,7 @@ document.addEventListener("mousedown", function(event) {
 
 document.addEventListener("mousemove", function(event) {
     //console.log("mousemove");
-    if (draggingTile) {
+    if (draggingTile && draggingTile.draggable) {
         //draggingTile.image.style.zIndex = 10000000000000000000000;
         const mouseX = event.clientX;
         const mouseY = event.clientY;
@@ -140,18 +141,51 @@ document.addEventListener("mousemove", function(event) {
         // Redraw the canvas
         const map_puzzle_context = map_puzzle.getContext("2d");
         map_puzzle_context.clearRect(0, 0, map_puzzle.width, map_puzzle.height);
+        drawGrid(map_puzzle_context, draggingTile.width, draggingTile.height, map_puzzle.width, map_puzzle.height);
+
+        const map_solve = document.getElementById("map_solve");
 
         for (let tile of tiles) {
             map_puzzle_context.drawImage(tile.image, tile.x, tile.y);
-
             map_puzzle_context.strokeRect(tile.x, tile.y, tile.width, tile.height);
+
+
         }
+
+
+
     }
 });
 
+
+let placedTiles = [];      // For correctly placed tiles
+let incorrectTiles = [];   // For incorrectly placed tiles
+
+// Function to draw the grid on the `map_solve` canvas
+function drawGrid(context, tileWidth, tileHeight, canvasWidth, canvasHeight) {
+    context.strokeStyle = "black";
+    context.lineWidth = 1;
+
+    // Draw vertical grid lines
+    for (let x = 0; x <= canvasWidth; x += tileWidth) {
+        context.beginPath();
+        context.moveTo(x, 0);
+        context.lineTo(x, canvasHeight);
+        context.stroke();
+    }
+
+    // Draw horizontal grid lines
+    for (let y = 0; y <= canvasHeight; y += tileHeight) {
+        context.beginPath();
+        context.moveTo(0, y);
+        context.lineTo(canvasWidth, y);
+        context.stroke();
+    }
+}
 document.addEventListener("mouseup", function(event) {
     console.log("mouseup");
     if (draggingTile) {
+        // Snap the tile to the nearest grid position
         draggingTile.x = Math.round(draggingTile.x / draggingTile.width) * draggingTile.width;
         draggingTile.y = Math.round(draggingTile.y / draggingTile.height) * draggingTile.height;
 
@@ -159,79 +193,105 @@ document.addEventListener("mouseup", function(event) {
         let mouseY = event.clientY;
 
         const map_solve = document.getElementById("map_solve");
-        let map_solve_context = map_solve.getContext("2d");
+        const map_solve_context = map_solve.getContext("2d");
         const canvasRect_solve = map_solve.getBoundingClientRect();
 
-        let map_puzzle_context = map_puzzle.getContext("2d");
+        const map_puzzle_context = map_puzzle.getContext("2d");
+
+        // Clear the `map_puzzle` canvas and redraw all tiles
         map_puzzle_context.clearRect(0, 0, map_puzzle.width, map_puzzle.height);
+        drawGrid(map_puzzle_context, draggingTile.width, draggingTile.height, map_puzzle.width, map_puzzle.height);
         for (let tile of tiles) {
             map_puzzle_context.drawImage(tile.image, tile.x, tile.y);
             map_puzzle_context.strokeRect(tile.x, tile.y, tile.width, tile.height);
         }
 
+        // Calculate target tile position on the `map_solve` canvas
         let tileX = Math.floor((mouseX - canvasRect_solve.left) / draggingTile.width) * draggingTile.width;
         let tileY = Math.floor((mouseY - canvasRect_solve.top) / draggingTile.height) * draggingTile.height;
 
+        // Clear `map_solve`, redraw grid, and redraw correctly placed tiles
+        map_solve_context.clearRect(0, 0, map_solve.width, map_solve.height);
+        drawGrid(map_puzzle_context, draggingTile.width, draggingTile.height, map_puzzle.width, map_puzzle.height);
+        drawGrid(map_solve_context, draggingTile.width, draggingTile.height, map_solve.width, map_solve.height);
+
+
+        // Redraw all correctly placed tiles from `placedTiles`
+        for (let tile of placedTiles) {
+            map_solve_context.drawImage(tile.image, tile.x, tile.y);
+            map_solve_context.strokeStyle = "green";
+            map_solve_context.lineWidth = 3;
+            map_solve_context.strokeRect(tile.x, tile.y, tile.width, tile.height);
+        }
+
+        // Check if the mouse is inside the `map_solve` canvas
         if (mouseX > canvasRect_solve.left && mouseX < canvasRect_solve.right &&
             mouseY > canvasRect_solve.top && mouseY < canvasRect_solve.bottom) {
 
-            map_solve_context.drawImage(draggingTile.image, tileX, tileY);
-            // map_solve_context.strokeRect(tileX, tileY, draggingTile.width, draggingTile.height);
+            // Check if the tile is in the correct position
+            const correctX = draggingTile.correct_column * draggingTile.width;
+            const correctY = draggingTile.correct_row * draggingTile.height;
+
+            if (tileX === correctX && tileY === correctY) {
+                // Correct position: draw the tile with a green border and add to placedTiles
+                map_solve_context.drawImage(draggingTile.image, correctX, correctY);
+                map_solve_context.strokeStyle = "green";
+                map_solve_context.lineWidth = 3;
+                map_solve_context.strokeRect(correctX, correctY, draggingTile.width, draggingTile.height);
+
+                // Add the tile to placedTiles to retain it on the `map_solve` canvas
+                placedTiles.push({
+                    image: draggingTile.image,
+                    x: correctX,
+                    y: correctY,
+                    width: draggingTile.width,
+                    height: draggingTile.height
+                });
+
+                correct_tiles_counter++;
+                draggingTile.draggable = false;
+
+                if (correct_tiles_counter === 2) {
+
+                    // Puzzle completed - show congratulations message
+                    map_solve_context.filter = "blur(5px)";
+                    map_solve_context.drawImage(map_solve, 0, 0);
+                    map_solve_context.filter = "none";
+                    map_solve_context.font = "50px Arial";
+                    map_solve_context.fillStyle = "black";
+                    map_solve_context.textAlign = "center";
+                    map_solve_context.fillText("Congratulations!", map_solve.width / 2, map_solve.height / 2);
+
+
+
+
+                    if ("Notification" in window) {
+                        Notification.requestPermission().then(function(permission) {
+                            if (permission === "granted") {
+                                new Notification("Congratulations!", {
+                                    body: "You have solved the puzzle!",
+                                    icon: "https://www.freeiconspng.com/uploads/checkmark-png-picture-8.png"
+                                });
+                            }
+                        });
+                    }
+                }
+            }
+            else {
+
+                map_solve_context.drawImage(draggingTile.image, tileX, tileY);
+                map_solve_context.strokeStyle = "red";
+                map_solve_context.lineWidth = 3;
+                map_solve_context.strokeRect(tileX, tileY, draggingTile.width, draggingTile.height);
+            }
         }
 
-        const correct_column = canvasRect_solve.left + (draggingTile.correct_column * draggingTile.width);
-        const correct_row = canvasRect_solve.top + (draggingTile.correct_row * draggingTile.height);
-
-        //Checking if the tile is in the correct position
-        if (mouseX > correct_column && mouseX < correct_column + draggingTile.width &&
-            mouseY > correct_row && mouseY < correct_row + draggingTile.height) {
-
-            map_solve_context.drawImage(draggingTile.image, correct_column, correct_row);
-
-            map_solve_context.strokeStyle = "green";
-
-            map_solve_context.lineWidth = 3;  // Możesz dostosować grubość obramówki
-            //map_solve_context.strokeRect(correct_column, correct_row, draggingTile.width, draggingTile.height);
-            // console.log(draggingTile.correct_row, draggingTile.correct_column);
-            // console.log(correct_column, correct_row);
-            // console.log(event.clientX, event.clientY);
-            // console.log("MAX:", correct_column + draggingTile.width, correct_row + draggingTile.height);
-             map_solve_context.strokeRect(draggingTile.correct_column*draggingTile.width, draggingTile.correct_row*draggingTile.height, draggingTile.width, draggingTile.height);
-             correct_tiles++;
-             if (correct_tiles === 1) {
-                let map_solve_context = map_solve.getContext("2d");
-                map_solve_context.filter = "blur(5px)";
-                map_solve_context.drawImage(map_solve, 0, 0);
-                map_solve_context.filter = "none";
-                map_solve_context.font = "50px Arial";
-                map_solve_context.fillStyle = "black";
-                map_solve_context.textAlign = "center";
-                map_solve_context.fillText("Congratulations!", map_solve.width / 2, map_solve.height / 2);
-             }
-
-            //  draggingTile.draggable = false;
-        }
-
-        else{
-            map_solve_context.strokeStyle = "red";
-            map_solve_context.lineWidth = 3;
-            // let tileX = Math.floor((mouseX - canvasRect_solve.left) / draggingTile.width) * draggingTile.width;
-            // let tileY = Math.floor((mouseY - canvasRect_solve.top) / draggingTile.height) * draggingTile.height;
-            //map_solve_context.strokeRect(draggingTile.x - canvasRect_solve.left, draggingTile.y, draggingTile.width, draggingTile.height);
-            //map_solve_context.strokeRect(draggingTile.x - canvasRect_solve.width, draggingTile.y, draggingTile.width, draggingTile.height);
-            map_solve_context.strokeRect(tileX, tileY, draggingTile.width, draggingTile.height);
-        }
-
-
-        //draggingTile.image.style.zIndex = 0;
         draggingTile = null;
     }
 });
 
 
-// map_puzzle.addEventListener("mouseleave", function() {
-//     draggingTile = null;
-// });
+
 
     });
 });
