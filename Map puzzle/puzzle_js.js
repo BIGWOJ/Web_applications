@@ -276,7 +276,7 @@ function draw_grid(context, tile_width, tile_height, canvas_width, canvas_height
     context.lineWidth = 2;
 
     //Draw vertical grid lines
-    for (let x = tile_width; x <= canvas_width-tile_width; x += tile_width) {
+    for (let x = tile_width; x <= canvas_width; x += tile_width) {
         context.beginPath();
         context.moveTo(x, 0);
         context.lineTo(x, canvas_height);
