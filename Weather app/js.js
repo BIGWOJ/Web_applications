@@ -23,7 +23,6 @@ class Weather_app_class {
             //Parsing JSON response
             this.current_weather = JSON.parse(xml_request.responseText);
             this.append_weather_block();
-            //console.log(this.current_weather);
         }
         //Sending asynchronous request
         xml_request.open("GET", query_url, true);
@@ -37,7 +36,6 @@ class Weather_app_class {
         const forecast = await response.json();
         this.forecast_weather = forecast.list;
         this.append_weather_block();
-        //console.log(this.forecast_weather);
     }
 
     //Setting current weather and forecast for given location
