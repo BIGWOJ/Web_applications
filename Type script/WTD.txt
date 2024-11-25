@@ -1,0 +1,3 @@
+- niech zmienia się tylko tło
+/ gitignore -> 
+	/node_modules
