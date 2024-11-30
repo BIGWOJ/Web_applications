@@ -1,30 +1,44 @@
-let default_theme = 'page1.css';
-let second_theme = 'page2.css';
-let current_theme = 'default';
+let current_theme = "page1";
+let themes = {
+    page1: "styles/page1.css",
+    page2: "styles/page2.css",
+    page3: "styles/page3.css"
+};
 
-window.addEventListener('DOMContentLoaded', (event) => {
-    const theme_button = document.querySelector('.theme_button');
-    const body = document.querySelector('body');
+function change_theme(theme: string) {
+    const node_list = document.querySelectorAll("link[rel=stylesheet]");
+    const theme_link = node_list[0] as HTMLLinkElement;
+    theme_link.href = `styles/${theme}.css`;
+    current_theme = theme;
 
-    const second_theme_link = document.createElement('link');
+    if (theme === "page2") {
+        const theme_buttons = document.querySelectorAll(".theme_button");
+        for (let theme_counter = 0; theme_counter < theme_buttons.length; theme_counter++) {
+            (theme_buttons[theme_counter] as HTMLElement).style.left = `${theme_counter * 2.5 + 27}%`;
+        }
+    }
+    else {
+        const theme_buttons = document.querySelectorAll(".theme_button");
+        for (let theme_counter = 0; theme_counter < theme_buttons.length; theme_counter++) {
+            (theme_buttons[theme_counter] as HTMLElement).style.left = `${theme_counter * 5 + 9}%`;
+        }
+    }
+}
 
+window.onload = function() {
+    const theme_list = Object.keys(themes) as (keyof typeof themes)[];
 
+    for (let theme_counter = 0; theme_counter < theme_list.length; theme_counter++) {
+        const button = document.createElement("button");
+        button.className = "theme_button";
+        button.innerHTML = `Styl ${theme_counter + 1}`;
+        button.style.left = `${theme_counter * 2.5 + 27}%`;
 
+        button.onclick = () => {
+            const selected_theme = theme_list[theme_counter];
+            change_theme(selected_theme);
+        };
 
-
-
-
-    // if (theme_button && body) {
-    //     theme_button.addEventListener('click', (event) => {
-    //         if (current_theme === 'default') {
-    //             body.style.backgroundImage = 'url("sauna_background.jpg")';
-    //             current_theme = 'gray_background';
-    //         }
-    //         else {
-    //             body.style.backgroundImage = 'none';
-    //             body.style.backgroundColor = '#372f37';
-    //             current_theme = 'default';
-    //         }
-    //     });
-    // }
-})
+        document.querySelector(".footer")?.appendChild(button);
+    }
+};

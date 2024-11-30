@@ -44,10 +44,8 @@
 
 body {
     color: #F0F0F0;
-    background-image: url("sauna_background.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: top center;
+    background-image: none;
+    background-color: gray;
     margin: 0;
     padding: 0;
     text-shadow:
@@ -56,7 +54,7 @@ body {
             -1px 1px 0 #211D21,
             1px 1px 0 #211D21;
     height: auto;
-    width: 95vw;
+    width: 100vw;
     overflow-x: hidden;
 }
 
@@ -156,9 +154,8 @@ body {
     font-family: cursive;
     font-style: italic;
     position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 0.75vh;
+    margin-left: 35%;
+    bottom: 16px;
     transition: background-color 0.3s;
     text-shadow: none;
     z-index: 500;
