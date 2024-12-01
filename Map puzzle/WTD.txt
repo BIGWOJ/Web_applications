@@ -1,3 +1,0 @@
-1. Widać obrazek tylko w map puzzle, poza już się nie renderuje
-2. Jeżeli w map solve jest kafelek na złym miejscu i dodam kolejny z map puzzle na map solve, czyli są 2 na złym miejscu
-w map solve, to rysuje się tylko ten nowszy
