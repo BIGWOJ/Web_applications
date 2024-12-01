@@ -1,0 +1,148 @@
+body {
+    background-color: #F0F0F0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.main_block {
+    position: relative;
+    background-color: #F0F0F0;
+    width: auto;
+    min-width: 800px;
+    max-width: 100%;
+    margin: 50px auto;
+    padding: 20px;
+    box-shadow: 0 4px 10px #AA8778;
+    border-radius: 8px;
+    border: 1px solid #211D21;
+    display: block;
+    white-space: nowrap;
+}
+
+.search_box {
+    background-color: #AA8778;
+    width: 250px;
+    height: 35px;
+    margin: 0 auto;
+    border-radius: 30px;
+    border: 1px solid #211D21;
+    box-shadow: 0 2px 8px #AA8778;
+    padding: 5px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search_box input {
+    border: none;
+    background: none;
+    outline: none;
+    width: 100%;
+    font-size: 16px;
+    color: #211D21;
+}
+
+.search_box:hover {
+    background-color: #A07968;
+}
+
+.add_box {
+    background-color: #AA8778;
+    border-radius: 30px;
+    border: 1px solid #211D21;
+    box-shadow: 0 2px 8px #AA8778;
+    width: 450px;
+    height: 40px;
+    position: relative;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 15px;
+}
+
+.add_box:hover {
+    background-color: #A07968;
+}
+
+.add_box input {
+    border: none;
+    background: none;
+    outline: none;
+    font-size: 16px;
+    color: #211D21;
+}
+
+.add_box button {
+    background-color: #211D21;
+    color: #F0F0F0;
+    border: none;
+    border-radius: 20px;
+    padding: 7px 15px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.add_box button:hover {
+    background: #0e0c0e;
+}
+
+.task_list {
+    list-style-type: none;
+    padding: 0;
+    margin: 25px auto;
+}
+
+single_task {
+    background-color: #F8F4F1;
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px #AA8778;
+}
+
+single_task:hover {
+    background-color: #F0F0F0;
+}
+
+.task_text {
+    flex-grow: 1;
+}
+
+.edit_task_text_input {
+    font-size: inherit;
+    font-family: inherit;
+    border: none;
+    margin-right: 20px;
+}
+
+#task_list .delete_button {
+    background: none;
+    border: none;
+    color: #A07968;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+#task_list .edit_task_date {
+    background: none;
+    border: none;
+    color: #A07968;
+    cursor: pointer;
+    font-size: 20px;
+    margin-left: 20px;
+}
+
+mark {
+    background-color: #FFD54F;
+    padding: 5px 0;
+}
+
