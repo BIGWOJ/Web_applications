@@ -4,8 +4,62 @@
     <link rel="stylesheet" href="css.css">
     <meta charset="UTF-8">
     <title>Photo gallery</title>
+    <link rel="preload" href="photos/image_1_large.webp" as="image">
+
 </head>
+
 <body>
-    
+    <h1>Photo gallery using preload and lazy loading</h1>
+    <div class="gallery">
+        <picture>
+            <source data-srcset-webp srcset="photos/image_1_small.webp" media="(max-width: 600px)">
+            <source data-srcset-webp srcset="photos/image_1_medium.webp" media="(max-width: 1024px)">
+            <source data-srcset-webp srcset="photos/image_1_large.webp" media="(min-width: 1024px)">
+
+            <source data-srcset-fallback srcset="photos/image_1_small.jpg" media="(max-width: 600px)">
+            <source data-srcset-fallback srcset="photos/image_1_medium.jpg" media="(max-width: 1024px)">
+            <source data-srcset-fallback srcset="photos/image_1_large.jpg" media="(min-width: 1024px)">
+
+            <img src="photos/image_1_large.jpg" loading="eager" alt="Photo 1">
+        </picture>
+
+        <picture>
+            <source data-srcset-webp srcset="photos/image_2_small.webp" media="(max-width: 600px)">
+            <source data-srcset-webp srcset="photos/image_2_medium.webp" media="(max-width: 1024px)">
+            <source data-srcset-webp srcset="photos/image_2_large.webp" media="(min-width: 1024px)">
+
+            <source data-srcset-fallback srcset="photos/image_2_small.jpg" media="(max-width: 600px)">
+            <source data-srcset-fallback srcset="photos/image_2_medium.jpg" media="(max-width: 1024px)">
+            <source data-srcset-fallback srcset="photos/image_2_large.jpg" media="(min-width: 1024px)">
+
+            <img src="photos/image_2_large.webp" loading="lazy" alt="Photo 2">
+        </picture>
+
+        <picture>
+            <source data-srcset-webp srcset="photos/image_3_small.webp" media="(max-width: 600px)">
+            <source data-srcset-webp srcset="photos/image_3_medium.webp" media="(max-width: 1024px)">
+            <source data-srcset-webp srcset="photos/image_3_large.webp" media="(min-width: 1024px)">
+
+            <source data-srcset-fallback srcset="photos/image_3_small.jpg" media="(max-width: 600px)">
+            <source data-srcset-fallback srcset="photos/image_3_medium.jpg" media="(max-width: 1024px)">
+            <source data-srcset-fallback srcset="photos/image_3_large.jpg" media="(min-width: 1024px)">
+
+            <img src="photos/image_3_large.jpg" loading="lazy" alt="Photo 3">
+        </picture>
+
+        <picture>
+            <source data-srcset-webp srcset="photos/image_4_small.webp" media="(max-width: 600px)">
+            <source data-srcset-webp srcset="photos/image_4_medium.webp" media="(max-width: 1024px)">
+            <source data-srcset-webp srcset="photos/image_4_large.webp" media="(min-width: 1024px)">
+
+            <source data-srcset-fallback srcset="photos/image_4_small.jpg" media="(max-width: 600px)">
+            <source data-srcset-fallback srcset="photos/image_4_medium.jpg" media="(max-width: 1024px)">
+            <source data-srcset-fallback srcset="photos/image_4_large.jpg" media="(min-width: 1024px)">
+
+            <img src="photos/image_4_large.jpg" loading="lazy" alt="Photo 4">
+        </picture>
+    </div>
+
+    <script src="js.js"></script>
 </body>
 </html>
