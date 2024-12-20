@@ -36,7 +36,6 @@ function load_images(webp_supported) {
 }
 
 //Calling functions
-is_webp_supported(function(webp_supported)
-{
-    load_images(true);
+is_webp_supported(function(webp_supported) {
+    load_images(webp_supported);
 });
