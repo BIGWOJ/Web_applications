@@ -4,8 +4,9 @@
     <link rel="stylesheet" href="css.css">
     <meta charset="UTF-8">
     <title>Photo gallery</title>
+    <link rel="preload" href="photos/image_1_small.webp" as="image">
+    <link rel="preload" href="photos/image_1_medium.webp" as="image">
     <link rel="preload" href="photos/image_1_large.webp" as="image">
-
 </head>
 
 <body>
@@ -20,7 +21,7 @@
             <source data-srcset-fallback srcset="photos/image_1_medium.jpg" media="(max-width: 1024px)">
             <source data-srcset-fallback srcset="photos/image_1_large.jpg" media="(min-width: 1024px)">
 
-            <img src="photos/image_1_large.jpg" loading="eager" alt="Photo 1">
+            <img src="photos/image_1_large.webp" alt="Photo 1">
         </picture>
 
         <picture>
@@ -44,7 +45,7 @@
             <source data-srcset-fallback srcset="photos/image_3_medium.jpg" media="(max-width: 1024px)">
             <source data-srcset-fallback srcset="photos/image_3_large.jpg" media="(min-width: 1024px)">
 
-            <img src="photos/image_3_large.jpg" loading="lazy" alt="Photo 3">
+            <img src="photos/image_3_large.webp" loading="lazy" alt="Photo 3">
         </picture>
 
         <picture>
@@ -56,7 +57,7 @@
             <source data-srcset-fallback srcset="photos/image_4_medium.jpg" media="(max-width: 1024px)">
             <source data-srcset-fallback srcset="photos/image_4_large.jpg" media="(min-width: 1024px)">
 
-            <img src="photos/image_4_large.jpg" loading="lazy" alt="Photo 4">
+            <img src="photos/image_4_large.webp" loading="lazy" alt="Photo 4">
         </picture>
     </div>
 

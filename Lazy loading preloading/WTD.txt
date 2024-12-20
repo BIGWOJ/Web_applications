@@ -1,2 +1,0 @@
-1. zmiana z webp na jpg nie działa, jak wywołuję funkcję z false to nie zmienia się format
-2. dodanie bluru podczas ładowania

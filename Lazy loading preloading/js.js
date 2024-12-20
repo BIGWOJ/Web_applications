@@ -15,31 +15,28 @@ function is_webp_supported(callback) {
 function load_images(webp_supported) {
     document.querySelectorAll("picture").forEach(picture => {
         const sources = picture.querySelectorAll(
-            webp_supported ? "[data-srcset-webp]" : "[data-srcset-fallback]"
+            webp_supported ? "[data-srcset-fallback]" : "[data-srcset-webp]"
         );
 
-        // Update all <source> elements
+        //Update all <source> elements
         sources.forEach(source => {
-            const srcset_attribute = webp_supported ? 'data-srcset-webp' : 'data-srcset-fallback';
+            const srcset_attribute = webp_supported ? 'data-srcset-fallback' : 'data-srcset-webp';
             source.srcset = source.getAttribute(srcset_attribute);
         });
 
-        // Update <img> fallback source
+        //Update <img> src
         const image = picture.querySelector("img");
-        const src_attribute = webp_supported ? 'data-src-webp' : 'data-src-fallback';
+        const src_attribute = webp_supported ? 'data-src-fallback' : 'data-src-webp';
+        console.log(src_attribute);
         if (image.hasAttribute(src_attribute)) {
             image.src = image.getAttribute(src_attribute);
         }
+        image.classList.add("loaded");
     });
 }
 
-
 //Calling functions
-// is_webp_supported(function(webp_supported)
-// {
-//     webp_supported = false;
-//     load_images(webp_supported);
-//     console.log(webp_supported);
-// });
-
-load_images(false);
+is_webp_supported(function(webp_supported)
+{
+    load_images(true);
+});
