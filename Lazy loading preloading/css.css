@@ -1,0 +1,26 @@
+h1 {
+    font-size: 3vh;
+    color: #211D1D;
+    text-align: center;
+    margin-top: 2vh;
+}
+
+.gallery {
+    display: grid;
+    grid-template-rows: repeat(auto-fit, minmax(200px, 1fr));
+    justify-content: center;
+    grid-gap: 10vh;
+    margin-bottom: 2vh;
+}
+
+.gallery img {
+    filter: blur(15px);
+}
+
+.gallery img.loaded {
+    filter: blur(0);
+    transition: filter 2s;
+    border: solid 2px #211D1D;
+    border-radius: 30px;
+    box-shadow: 10px 7px 15px #AA8778;
+}
