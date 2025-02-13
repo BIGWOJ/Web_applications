@@ -1,0 +1,54 @@
+:root {
+    --black: #404040;
+    --gold: #FFB22C;
+    --white: #F5F5F5;
+}
+
+/*.dark {*/
+/*    --black: #211D2;*/
+/*}*/
+
+/*.light {*/
+/*    --black: #F5F5F5*/
+/*}*/
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: var(--gold);
+    text-align: center;
+    margin: 50px 0 50px 0;
+}
+
+body {
+    background-color: var(--black);
+}
+
+#copy_button, #password_visibility {
+    cursor: pointer;
+}
+
+.blurred {
+    color: transparent;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.img {
+    width: 20px;
+    height: 20px;
+}
+
+.password {
+    width: 50%;
+    margin: 50px auto 50px auto;
+    background: #fff;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 26px 20px;
+    border-radius: 5px;
+}
