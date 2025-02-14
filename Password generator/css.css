@@ -2,38 +2,72 @@
     --black: #404040;
     --gold: #FFB22C;
     --white: #F5F5F5;
+    --standard_font_size: 25px;
 }
-
-/*.dark {*/
-/*    --black: #211D2;*/
-/*}*/
-
-/*.light {*/
-/*    --black: #F5F5F5*/
-/*}*/
 
 * {
     margin: 0;
     padding: 0;
+    font-size: var(--standard_font_size);
 }
 
 h1 {
     color: var(--gold);
     text-align: center;
-    margin: 50px 0 50px 0;
+    margin: 50px 0 10px 0;
+    font-size: calc(var(--standard_font_size) * 1.5);
 }
 
 body {
     background-color: var(--black);
+    color: var(--white);
 }
 
 #copy_button, #password_visibility {
     cursor: pointer;
+    margin-top: 10px;
 }
+
+#popup {
+    width: 350px;
+    height: 50px;
+    background: var(--white);
+    border-radius: 5px;
+    border: 1px solid var(--gold);
+    box-shadow: 0 0 15px var(--gold);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.popup_open {
+    opacity: 1 !important;
+    pointer-events: none;
+    animation: fadeOut 1s forwards 1s;
+
+}
+
+/*@keyframes fadeOut {*/
+/*    from {*/
+/*        opacity: 1;*/
+/*    }*/
+/*    to {*/
+/*        opacity: 0;*/
+/*    }*/
+/*}*/
+
+
 
 .blurred {
     color: transparent;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .img {
@@ -41,14 +75,53 @@ body {
     height: 20px;
 }
 
-.password {
-    width: 50%;
-    margin: 50px auto 50px auto;
-    background: #fff;
-    color: #333;
+#password {
+    flex-direction: column;
+    width: 20%;
+    height: auto;
+    margin: 50px auto;
+    background: var(--white);
+    color: var(--black);
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 26px 20px;
-    border-radius: 5px;
+    padding: 25px 25px;
+    border-radius: 20px;
+    border: 1px solid var(--gold);
+    box-shadow: 0 0 15px var(--gold);
+    transition: box-shadow 0.1s;
+}
+
+#password input {
+    font-size: calc(var(--standard_font_size) * 0.75);
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid var(--gold);
+    margin: 30px 0;
+    border-radius: 20px;
+}
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+}
+
+#options {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+
+#generate_button {
+    background-color: var(--white);
+    border: 1px solid var(--gold);
+    box-shadow: 0 0 15px var(--gold);
+    color: var(--black);
+    padding: 5px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    margin-top: 25px;
 }
