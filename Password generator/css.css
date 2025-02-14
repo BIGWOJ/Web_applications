@@ -54,17 +54,6 @@ body {
 
 }
 
-/*@keyframes fadeOut {*/
-/*    from {*/
-/*        opacity: 1;*/
-/*    }*/
-/*    to {*/
-/*        opacity: 0;*/
-/*    }*/
-/*}*/
-
-
-
 .blurred {
     color: transparent;
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
